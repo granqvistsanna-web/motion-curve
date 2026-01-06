@@ -1,21 +1,12 @@
 {
-  "name": "pomodoro-timer",
+  "name": "framer-plugin-starter",
   "private": false,
   "version": "1.0.0",
-  "description": "A beautiful, minimal Pomodoro timer plugin for Framer. Stay focused with customizable work sessions, breaks, and long breaks.",
-  "author": "Sanna Granqvist",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/granqvistsanna-web/pomodoro.git"
-  },
+  "description": "A Framer plugin starter kit",
+  "author": "",
   "keywords": [
     "framer",
-    "framer-plugin",
-    "pomodoro",
-    "timer",
-    "productivity",
-    "focus",
-    "time-management"
+    "framer-plugin"
   ],
   "license": "MIT",
   "type": "module",

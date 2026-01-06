@@ -1,17 +1,15 @@
-# Pomodoro Timer - Framer Plugin
+# Framer Plugin Starter Kit
 
-A beautiful, minimal Pomodoro timer plugin for Framer. Stay focused with customizable work sessions, breaks, and long breaks.
+A starter kit for building Framer plugins with React, TypeScript, Vite, and Tailwind CSS.
 
 ## Features
 
-- ⏱️ **Pomodoro Timer** - 25-minute focus sessions with customizable durations
-- ☕ **Break Timer** - Short breaks between sessions
-- 🎯 **Long Break** - Extended breaks after multiple sessions
-- 🎨 **Dark/Light Mode** - Automatically adapts to Framer's theme
-- 📊 **Session Tracking** - Track your daily Pomodoro sessions
-- 🔊 **Sound Notifications** - Audio alerts when sessions complete
-- 🎛️ **Customizable Settings** - Adjust timer durations to your preference
-- 📱 **Compact Mode** - Minimize to a compact horizontal bar
+- ⚡ **Vite 6** - Fast build tool and dev server
+- ⚛️ **React 18** - Modern React with TypeScript
+- 🎨 **Tailwind CSS v3** - Utility-first CSS framework
+- 🎯 **Framer Plugin SDK v3** - Official Framer plugin API
+- 🌓 **Design System** - Built-in support for Framer's dark/light themes
+- 🔒 **HTTPS Dev Server** - Required for Framer plugin development
 
 ## Development
 
@@ -41,12 +39,18 @@ npm run build
 npm run pack
 ```
 
+This creates a `.framer-plugin` file that can be distributed.
+
 ## Tech Stack
 
 - React 18 + TypeScript
 - Vite 6
 - Tailwind CSS v3
 - Framer Plugin SDK v3
+
+## Design System
+
+This starter includes a design system built on Framer's CSS variables that automatically adapt to dark and light modes. See `src/App.css` for available components and utilities.
 
 ## License
 

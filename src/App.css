@@ -3,131 +3,17 @@
 @tailwind utilities;
 
 /* ============================================
-   Design Tokens - Single Source of Truth
-   ============================================ */
-
-:root {
-    /* Accent - Primary brand color */
-    --color-accent: #e85d36;
-    --color-accent-hover: #d45430;
-    --color-accent-muted: rgba(232, 93, 54, 0.12);
-    --color-accent-glow: rgba(232, 93, 54, 0.45);
-
-    /* Semantic colors */
-    --color-success: #34c759;
-    --color-success-muted: rgba(52, 199, 89, 0.15);
-
-    /* Break color - calm blue */
-    --color-break: #5b9bd5;
-    --color-break-glow: rgba(91, 155, 213, 0.45);
-
-    /* Backgrounds */
-    --color-bg: #fafafa;
-    --color-surface: #ffffff;
-    --color-surface-elevated: rgba(255, 255, 255, 0.98);
-    --color-surface-overlay: rgba(255, 255, 255, 0.95);
-
-    /* Text */
-    --color-text: rgba(0, 0, 0, 0.88);
-    --color-text-secondary: rgba(0, 0, 0, 0.6);
-    --color-text-muted: rgba(0, 0, 0, 0.4);
-    --color-text-on-accent: #ffffff;
-
-    /* Borders */
-    --color-border: rgba(0, 0, 0, 0.08);
-    --color-border-strong: rgba(0, 0, 0, 0.12);
-    --color-divider: rgba(0, 0, 0, 0.06);
-
-    /* Interactive states */
-    --color-focus-ring: var(--color-accent);
-    --color-disabled: rgba(0, 0, 0, 0.25);
-    --color-hover-bg: rgba(0, 0, 0, 0.04);
-    --color-button-secondary-bg: rgba(0, 0, 0, 0.04);
-
-    /* Toggle */
-    --color-toggle-bg: #e5e5ea;
-    --color-toggle-knob: #ffffff;
-    --shadow-toggle: 0 1px 3px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
-
-    /* Glass effect */
-    --color-glass-bg: rgba(255, 255, 255, 0.7);
-    --color-glass-border: rgba(0, 0, 0, 0.08);
-
-    /* Shadows - minimal */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-    --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.08);
-
-    /* Mode backgrounds */
-    --color-mode-focus: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
-    --color-mode-break: linear-gradient(180deg, #ffffff 0%, #f3f5f3 100%);
-    --color-mode-break-long: linear-gradient(180deg, #ffffff 0%, #f4f3f6 100%);
-
-    /* Scrollbar */
-    --color-scrollbar: rgba(0, 0, 0, 0.08);
-    --color-scrollbar-hover: rgba(0, 0, 0, 0.15);
-}
-
-[data-theme="dark"] {
-    /* Accent - slightly brighter for dark mode visibility */
-    --color-accent: #ff7f5c;
-    --color-accent-hover: #ff9474;
-    --color-accent-muted: rgba(255, 127, 92, 0.15);
-    --color-accent-glow: rgba(255, 127, 92, 0.25);
-
-    /* Semantic colors */
-    --color-success: #30d158;
-    --color-success-muted: rgba(48, 209, 88, 0.15);
-
-    /* Break color - calm blue */
-    --color-break: #6bb3e8;
-    --color-break-glow: rgba(107, 179, 232, 0.25);
-
-    /* Backgrounds */
-    --color-bg: #111111;
-    --color-surface: #1c1c1e;
-    --color-surface-elevated: #2c2c2e;
-    --color-surface-overlay: rgba(28, 28, 30, 0.95);
-
-    /* Text - WCAG compliant contrast */
-    --color-text: rgba(255, 255, 255, 0.92);
-    --color-text-secondary: rgba(255, 255, 255, 0.65);
-    --color-text-muted: rgba(255, 255, 255, 0.45);
-    --color-text-on-accent: #ffffff;
-
-    /* Borders - subtle, low contrast */
-    --color-border: rgba(255, 255, 255, 0.10);
-    --color-border-strong: rgba(255, 255, 255, 0.20);
-    --color-divider: rgba(255, 255, 255, 0.08);
-
-    /* Interactive states */
-    --color-disabled: rgba(255, 255, 255, 0.25);
-    --color-hover-bg: rgba(255, 255, 255, 0.08);
-    --color-button-secondary-bg: #2c2c2e;
-
-    /* Toggle */
-    --color-toggle-bg: #39393d;
-    --color-toggle-knob: #ffffff;
-    --shadow-toggle: 0 1px 2px rgba(0, 0, 0, 0.3);
-
-    /* Glass effect */
-    --color-glass-bg: rgba(255, 255, 255, 0.08);
-    --color-glass-border: rgba(255, 255, 255, 0.1);
-
-    /* Shadows - minimal in dark mode */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.25);
-    --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.3);
-
-    /* Mode backgrounds - dark on top, subtle color tints */
-    --color-mode-focus: linear-gradient(180deg, #111111 0%, #1a1816 100%);
-    --color-mode-break: linear-gradient(180deg, #111111 0%, #141a1c 100%);
-    --color-mode-break-long: linear-gradient(180deg, #111111 0%, #18151c 100%);
-
-    /* Scrollbar */
-    --color-scrollbar: rgba(255, 255, 255, 0.1);
-    --color-scrollbar-hover: rgba(255, 255, 255, 0.18);
-}
+   Design System - Framer CSS Variables
+   ============================================
+   
+   This design system uses Framer's built-in CSS variables
+   that automatically adapt to dark and light modes.
+   
+   Usage:
+   - Use CSS variables directly: var(--framer-color-text)
+   - Use Tailwind classes: text-theme-text, bg-theme-bg
+   - Colors automatically switch based on Framer's theme
+*/
 
 /* ============================================
    Base Styles
@@ -140,24 +26,8 @@
 }
 
 body {
-    background: var(--color-bg);
-    color: var(--color-text);
-}
-
-/* ============================================
-   Mode Backgrounds
-   ============================================ */
-
-.bg-mode-focus {
-    background: var(--color-mode-focus);
-}
-
-.bg-mode-break {
-    background: var(--color-mode-break);
-}
-
-.bg-mode-break-long {
-    background: var(--color-mode-break-long);
+    background-color: var(--framer-color-bg);
+    color: var(--framer-color-text);
 }
 
 /* ============================================
@@ -167,6 +37,180 @@ body {
 .tabular-nums {
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum";
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
+.btn-primary {
+    background-color: var(--framer-color-tint);
+    color: var(--framer-color-text-reversed);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--framer-color-tint-dark);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.btn-primary:focus-visible {
+    outline: 2px solid var(--framer-color-tint);
+    outline-offset: 2px;
+}
+
+.btn-secondary {
+    background-color: var(--framer-color-bg-secondary);
+    color: var(--framer-color-text);
+    border: 1px solid var(--framer-color-divider);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background-color: var(--framer-color-bg-tertiary);
+    border-color: var(--framer-color-tint);
+}
+
+.btn-secondary:active {
+    transform: scale(0.98);
+}
+
+.btn-secondary:focus-visible {
+    outline: 2px solid var(--framer-color-tint);
+    outline-offset: 2px;
+}
+
+/* Icon Button */
+.icon-btn {
+    background-color: transparent;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--framer-color-text-secondary);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn:hover {
+    background-color: var(--framer-color-bg-secondary);
+    color: var(--framer-color-tint);
+}
+
+.icon-btn:active {
+    transform: scale(0.95);
+}
+
+.icon-btn:focus-visible {
+    outline: 2px solid var(--framer-color-tint);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   Inputs & Form Elements
+   ============================================ */
+
+.input {
+    background-color: var(--framer-color-bg-secondary);
+    color: var(--framer-color-text);
+    border: 1px solid var(--framer-color-divider);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--framer-color-tint);
+    box-shadow: 0 0 0 3px var(--framer-color-tint-dimmed);
+}
+
+.input::placeholder {
+    color: var(--framer-color-text-tertiary);
+}
+
+.input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   Cards & Surfaces
+   ============================================ */
+
+.card {
+    background-color: var(--framer-color-bg-secondary);
+    border: 1px solid var(--framer-color-divider);
+    border-radius: 0.75rem;
+    padding: 1rem;
+}
+
+.card-elevated {
+    background-color: var(--framer-color-bg-tertiary);
+    border: 1px solid var(--framer-color-divider);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================
+   Dividers
+   ============================================ */
+
+.divider {
+    height: 1px;
+    background-color: var(--framer-color-divider);
+    border: none;
+    margin: 0;
+}
+
+/* ============================================
+   Focus States
+   ============================================ */
+
+*:focus-visible {
+    outline: 2px solid var(--framer-color-tint);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   Scrollbar
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--framer-color-divider);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--framer-color-text-tertiary);
 }
 
 /* ============================================
@@ -184,159 +228,6 @@ body {
     }
 }
 
-@keyframes pulse-soft {
-    0% {
-        box-shadow: 0 0 2px 1px currentColor;
-    }
-    25% {
-        box-shadow: 0 0 8px 4px currentColor;
-    }
-    50% {
-        box-shadow: 0 0 3px 1px currentColor;
-    }
-    75% {
-        box-shadow: 0 0 6px 3px currentColor;
-    }
-    100% {
-        box-shadow: 0 0 2px 1px currentColor;
-    }
-}
-
-@keyframes glow-pulse {
-    0% {
-        transform: scale(0.5);
-    }
-    25% {
-        transform: scale(1.08);
-    }
-    50% {
-        transform: scale(0.6);
-    }
-    75% {
-        transform: scale(1.04);
-    }
-    100% {
-        transform: scale(0.5);
-    }
-}
-
 .animate-fade-in {
     animation: fade-in 0.2s ease-out;
-}
-
-.animate-pulse-soft {
-    animation: pulse-soft 12s ease-in-out infinite;
-}
-
-.animate-glow-pulse {
-    animation: glow-pulse 12s ease-in-out infinite;
-}
-
-/* ============================================
-   Scrollbar
-   ============================================ */
-
-::-webkit-scrollbar {
-    width: 4px;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--color-scrollbar);
-    border-radius: 2px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--color-scrollbar-hover);
-}
-
-/* ============================================
-   Focus States
-   ============================================ */
-
-button:focus-visible,
-a:focus-visible {
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: 2px;
-}
-
-/* Ensure focus ring is visible on rounded elements */
-.rounded-lg:focus-visible,
-.rounded-full:focus-visible {
-    outline-offset: 2px;
-}
-
-/* Icon button */
-.icon-btn {
-    background-color: transparent;
-    border: none;
-}
-
-.icon-btn:hover {
-    background-color: var(--color-hover-bg);
-    color: var(--color-accent);
-}
-
-.icon-btn:focus-visible {
-    background-color: var(--color-hover-bg);
-    color: var(--color-accent);
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-}
-
-/* Secondary button background */
-.btn-secondary {
-    background-color: var(--color-button-secondary-bg) !important;
-}
-
-/* Primary button */
-.btn-primary {
-    background-color: var(--color-accent) !important;
-    color: var(--color-text-on-accent) !important;
-    border: none;
-}
-
-.btn-primary:hover {
-    background-color: var(--color-accent-hover) !important;
-}
-
-/* Hover accent */
-.hover-accent:hover {
-    color: var(--color-accent);
-    border-color: var(--color-accent);
-}
-
-/* Session badge */
-.session-badge {
-    background-color: var(--color-hover-bg);
-    border: none;
-}
-
-/* Footer links */
-.footer-link {
-    background-color: transparent;
-}
-
-.footer-link:hover {
-    background-color: var(--color-hover-bg);
-    transform: scale(1.02);
-}
-
-.footer-icon {
-    color: var(--color-text-muted);
-}
-
-.footer-link:hover .footer-icon {
-    color: var(--color-accent);
-}
-
-.footer-text {
-    color: var(--color-text-muted);
-}
-
-.footer-link:hover .footer-text {
-    color: var(--color-text);
 }

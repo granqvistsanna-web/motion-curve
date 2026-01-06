@@ -4,46 +4,23 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
     extend: {
       colors: {
-        // Semantic colors mapped to CSS variables
-        accent: {
-          DEFAULT: 'var(--color-accent)',
-          hover: 'var(--color-accent-hover)',
-          muted: 'var(--color-accent-muted)',
-          glow: 'var(--color-accent-glow)',
-        },
-        success: {
-          DEFAULT: 'var(--color-success)',
-          muted: 'var(--color-success-muted)',
-        },
-        surface: {
-          DEFAULT: 'var(--color-surface)',
-          elevated: 'var(--color-surface-elevated)',
-          overlay: 'var(--color-surface-overlay)',
-        },
+        // Framer theme colors - automatically adapt to dark/light mode
         theme: {
-          bg: 'var(--color-bg)',
-          text: 'var(--color-text)',
-          'text-secondary': 'var(--color-text-secondary)',
-          'text-muted': 'var(--color-text-muted)',
-          'text-on-accent': 'var(--color-text-on-accent)',
-          border: 'var(--color-border)',
-          'border-strong': 'var(--color-border-strong)',
-          disabled: 'var(--color-disabled)',
-          'hover-bg': 'var(--color-hover-bg)',
-          'btn-secondary': 'var(--color-button-secondary-bg)',
-          'toggle-bg': 'var(--color-toggle-bg)',
-          'toggle-knob': 'var(--color-toggle-knob)',
+          bg: 'var(--framer-color-bg)',
+          'bg-secondary': 'var(--framer-color-bg-secondary)',
+          'bg-tertiary': 'var(--framer-color-bg-tertiary)',
+          text: 'var(--framer-color-text)',
+          'text-reversed': 'var(--framer-color-text-reversed)',
+          'text-secondary': 'var(--framer-color-text-secondary)',
+          'text-tertiary': 'var(--framer-color-text-tertiary)',
+          tint: 'var(--framer-color-tint)',
+          'tint-dimmed': 'var(--framer-color-tint-dimmed)',
+          'tint-dark': 'var(--framer-color-tint-dark)',
+          divider: 'var(--framer-color-divider)',
         },
-      },
-      boxShadow: {
-        'theme-sm': 'var(--shadow-sm)',
-        'theme-md': 'var(--shadow-md)',
-        'theme-lg': 'var(--shadow-lg)',
-        'theme-toggle': 'var(--shadow-toggle)',
       },
     },
   },

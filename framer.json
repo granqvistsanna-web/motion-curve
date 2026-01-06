@@ -1,6 +1,6 @@
 {
-  "id": "pomd01",
-  "name": "Pomodoro Timer",
+  "id": "plugin-id",
+  "name": "My Plugin",
   "modes": [
     "canvas"
   ],
