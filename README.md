@@ -27,11 +27,7 @@ npm install
 npm run dev
 ```
 
-The dev server runs on `https://localhost:5173`. Add the plugin in Framer by pointing to the project directory:
-
-```
-/Users/sannagranqvist/Documents/App/framer-plugin-starter-kit-1
-```
+The dev server runs on `https://localhost:5173`. Add the plugin in Framer by pointing to the project directory.
 
 ### Build
 
