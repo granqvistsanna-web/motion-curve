@@ -71,7 +71,7 @@ export function App() {
         const modeColor = getModeColor(pomodoro.state.mode)
 
         return (
-            <main className={`flex items-center justify-between px-2 h-full relative transition-colors duration-700 ${bgClass}`}>
+            <main className={`flex items-center justify-between px-2.5 h-full relative transition-colors duration-700 ${bgClass}`}>
                 {/* Expand button */}
                 <button
                     onClick={toggleSize}
@@ -87,23 +87,15 @@ export function App() {
                 {/* Time display - center */}
                 <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
                     <span
-                        className={`relative flex items-center justify-center transition-opacity duration-300 ${
-                            isRunning || isPaused ? "opacity-100" : "opacity-0"
-                        }`}
-                        style={{ width: 12, height: 12 }}
-                    >
-                        {/* Solid dot with glow */}
-                        <span
-                            className={`relative rounded-full ${isRunning ? "animate-pulse-soft" : ""}`}
-                            style={{
-                                width: 4,
-                                height: 4,
-                                backgroundColor: modeColor,
-                                color: modeColor,
-                                opacity: isPaused ? 0.5 : 1
-                            }}
-                        />
-                    </span>
+                        className={`w-1 h-1 rounded-full transition-opacity duration-300 ${
+                            isRunning ? "animate-pulse-soft" : ""
+                        } ${isRunning || isPaused ? "opacity-100" : "opacity-0"}`}
+                        style={{
+                            backgroundColor: modeColor,
+                            color: modeColor,
+                            opacity: isPaused ? 0.5 : undefined
+                        }}
+                    />
                     <span
                         className={`text-[15px] font-medium tracking-tight transition-colors duration-300 ${
                             isRunning
@@ -121,7 +113,7 @@ export function App() {
                 {/* Play/Pause button - right side */}
                 <button
                     onClick={isRunning ? pomodoro.pause : pomodoro.start}
-                    className={`w-9 h-9 flex items-center justify-center rounded-xl transition-all active:scale-95 ${
+                    className={`w-9 h-9 flex items-center justify-center rounded-lg transition-all active:scale-95 ${
                         isRunning
                             ? "btn-secondary text-theme-text-secondary"
                             : "btn-primary"

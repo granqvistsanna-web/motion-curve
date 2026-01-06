@@ -1,30 +1,82 @@
 import { useState, useEffect, useCallback, useRef } from "react"
-import { useLocalStorage } from "./useLocalStorage"
-import { playCompletionSound } from "../utils/sound"
+import { usePomodoroSettings } from "./useLocalStorage"
+import { playCompletionSound, initAudio } from "../utils/sound"
 import type { TimerMode, TimerStatus, PomodoroSettings, PomodoroState } from "../types"
-import { DEFAULT_SETTINGS, STORAGE_KEYS, TIMER_TICK_INTERVAL, getDurationForMode } from "../constants"
+import {
+    STORAGE_KEYS,
+    TIMER_TICK_INTERVAL,
+    getDurationForMode,
+    validateMode,
+    validateSettings
+} from "../constants"
 
-// Re-export types for backwards compatibility
-export type { TimerMode, TimerStatus, PomodoroSettings, PomodoroState }
+/**
+ * Get today's date string for session tracking
+ */
+function getTodayKey(): string {
+    return new Date().toDateString()
+}
+
+/**
+ * Load today's session count from storage, resetting if date changed
+ */
+function loadTodaySessions(): number {
+    try {
+        const stored = localStorage.getItem(STORAGE_KEYS.today)
+        if (stored) {
+            const { date, sessions } = JSON.parse(stored)
+            if (date === getTodayKey() && typeof sessions === "number" && sessions >= 0) {
+                return sessions
+            }
+        }
+    } catch {
+        // Ignore parse errors
+    }
+    return 0
+}
+
+/**
+ * Save today's session count, checking for midnight rollover
+ */
+function saveTodaySessions(sessions: number): void {
+    localStorage.setItem(
+        STORAGE_KEYS.today,
+        JSON.stringify({ date: getTodayKey(), sessions })
+    )
+}
 
 export function usePomodoro(onComplete?: (mode: TimerMode) => void) {
-    const [settings, setSettings] = useLocalStorage<PomodoroSettings>(
-        STORAGE_KEYS.settings,
-        DEFAULT_SETTINGS
-    )
+    const [settings, setSettings] = usePomodoroSettings()
 
     const [state, setState] = useState<PomodoroState>(() => {
-        // Restore persisted state
+        // Restore persisted state with validation
         try {
             const stored = localStorage.getItem(STORAGE_KEYS.state)
             if (stored) {
                 const parsed = JSON.parse(stored)
+                const mode = validateMode(parsed.mode)
+                const completedSessions = typeof parsed.completedSessions === "number" && parsed.completedSessions >= 0
+                    ? parsed.completedSessions
+                    : 0
+
+                // Validate timeRemaining is within reasonable bounds
+                const maxDuration = Math.max(
+                    settings.focusDuration,
+                    settings.shortBreakDuration,
+                    settings.longBreakDuration
+                ) * 60
+                const timeRemaining = typeof parsed.timeRemaining === "number" &&
+                    parsed.timeRemaining > 0 &&
+                    parsed.timeRemaining <= maxDuration
+                    ? parsed.timeRemaining
+                    : getDurationForMode(mode, settings)
+
                 return {
-                    mode: parsed.mode || "focus",
+                    mode,
                     status: "idle", // Always start idle on refresh
-                    timeRemaining: parsed.timeRemaining || getDurationForMode(parsed.mode || "focus", settings),
-                    completedSessions: parsed.completedSessions || 0,
-                    todaySessions: 0, // Loaded separately
+                    timeRemaining,
+                    completedSessions,
+                    todaySessions: loadTodaySessions(),
                 }
             }
         } catch {
@@ -35,7 +87,7 @@ export function usePomodoro(onComplete?: (mode: TimerMode) => void) {
             status: "idle",
             timeRemaining: settings.focusDuration * 60,
             completedSessions: 0,
-            todaySessions: 0,
+            todaySessions: loadTodaySessions(),
         }
     })
 
@@ -46,27 +98,6 @@ export function usePomodoro(onComplete?: (mode: TimerMode) => void) {
     useEffect(() => {
         onCompleteRef.current = onComplete
     }, [onComplete])
-
-    // Load today's sessions from localStorage
-    useEffect(() => {
-        const today = new Date().toDateString()
-        const stored = localStorage.getItem(STORAGE_KEYS.today)
-        if (stored) {
-            const { date, sessions } = JSON.parse(stored)
-            if (date === today) {
-                setState(prev => ({ ...prev, todaySessions: sessions }))
-            }
-        }
-    }, [])
-
-    // Save today's sessions
-    useEffect(() => {
-        const today = new Date().toDateString()
-        localStorage.setItem(
-            STORAGE_KEYS.today,
-            JSON.stringify({ date: today, sessions: state.todaySessions })
-        )
-    }, [state.todaySessions])
 
     // Persist timer state (mode, completedSessions, timeRemaining when idle)
     useEffect(() => {
@@ -79,6 +110,11 @@ export function usePomodoro(onComplete?: (mode: TimerMode) => void) {
             })
         )
     }, [state.mode, state.completedSessions, state.status, state.timeRemaining])
+
+    // Save today's sessions whenever they change
+    useEffect(() => {
+        saveTodaySessions(state.todaySessions)
+    }, [state.todaySessions])
 
     // Timer tick - uses timestamp-based approach for accuracy
     // Note: state.timeRemaining is intentionally excluded from deps to prevent
@@ -110,10 +146,11 @@ export function usePomodoro(onComplete?: (mode: TimerMode) => void) {
 
                     onCompleteRef.current?.(completedMode)
 
-                    // Determine next mode
+                    // Determine next mode and update sessions
                     let nextMode: TimerMode
                     let newCompletedSessions = prev.completedSessions
-                    let newTodaySessions = prev.todaySessions
+                    // Check for midnight rollover before incrementing
+                    let newTodaySessions = loadTodaySessions()
 
                     if (completedMode === "focus") {
                         newCompletedSessions++
@@ -161,6 +198,8 @@ export function usePomodoro(onComplete?: (mode: TimerMode) => void) {
     }, [state.status, settings])
 
     const start = useCallback(() => {
+        // Initialize audio on first user interaction (required by browser autoplay policy)
+        initAudio()
         setState(prev => ({ ...prev, status: "running" }))
     }, [])
 
@@ -173,7 +212,8 @@ export function usePomodoro(onComplete?: (mode: TimerMode) => void) {
         setState(prev => {
             let nextMode: TimerMode
             let newCompletedSessions = prev.completedSessions
-            let newTodaySessions = prev.todaySessions
+            // Check for midnight rollover
+            let newTodaySessions = loadTodaySessions()
 
             if (prev.mode === "focus") {
                 // Count this focus session as completed
@@ -207,33 +247,20 @@ export function usePomodoro(onComplete?: (mode: TimerMode) => void) {
 
     const updateSettings = useCallback((newSettings: Partial<PomodoroSettings>) => {
         setSettings(prev => {
-            // Validate and clamp duration values
-            const validated = { ...newSettings }
-            if (validated.focusDuration !== undefined) {
-                validated.focusDuration = Math.max(1, Math.min(60, validated.focusDuration))
-            }
-            if (validated.shortBreakDuration !== undefined) {
-                validated.shortBreakDuration = Math.max(1, Math.min(30, validated.shortBreakDuration))
-            }
-            if (validated.longBreakDuration !== undefined) {
-                validated.longBreakDuration = Math.max(1, Math.min(60, validated.longBreakDuration))
-            }
-            if (validated.longBreakInterval !== undefined) {
-                validated.longBreakInterval = Math.max(2, Math.min(10, validated.longBreakInterval))
-            }
+            // Use centralized validation with bounds
+            const validated = validateSettings({ ...prev, ...newSettings })
 
-            const updated = { ...prev, ...validated }
             // If we update duration and timer is idle, update remaining time too
             setState(state => {
                 if (state.status === "idle") {
                     return {
                         ...state,
-                        timeRemaining: getDurationForMode(state.mode, updated),
+                        timeRemaining: getDurationForMode(state.mode, validated),
                     }
                 }
                 return state
             })
-            return updated
+            return validated
         })
     }, [setSettings])
 

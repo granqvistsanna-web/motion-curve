@@ -91,8 +91,8 @@
     --color-text-on-accent: #ffffff;
 
     /* Borders - subtle, low contrast */
-    --color-border: rgba(255, 255, 255, 0.08);
-    --color-border-strong: rgba(255, 255, 255, 0.12);
+    --color-border: rgba(255, 255, 255, 0.10);
+    --color-border-strong: rgba(255, 255, 255, 0.20);
 
     /* Interactive states */
     --color-disabled: rgba(255, 255, 255, 0.25);
@@ -109,10 +109,10 @@
     --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.25);
     --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.3);
 
-    /* Mode backgrounds - black on top */
-    --color-mode-focus: linear-gradient(180deg, #000000 0%, #181818 100%);
-    --color-mode-break: linear-gradient(180deg, #000000 0%, #171918 100%);
-    --color-mode-break-long: linear-gradient(180deg, #000000 0%, #181719 100%);
+    /* Mode backgrounds - black on top, subtle color tints */
+    --color-mode-focus: linear-gradient(180deg, #000000 0%, #1a1816 100%);
+    --color-mode-break: linear-gradient(180deg, #000000 0%, #141a1c 100%);
+    --color-mode-break-long: linear-gradient(180deg, #000000 0%, #18151c 100%);
 
     /* Scrollbar */
     --color-scrollbar: rgba(255, 255, 255, 0.1);
@@ -207,50 +207,6 @@ body {
 
 .animate-glow-pulse {
     animation: glow-pulse 4s ease-in-out infinite;
-}
-
-@keyframes slide-up-fade {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-slide-up {
-    animation: slide-up-fade 0.2s ease-out forwards;
-}
-
-.animate-delay-50 {
-    animation-delay: 50ms;
-    opacity: 0;
-}
-
-.animate-delay-100 {
-    animation-delay: 100ms;
-    opacity: 0;
-}
-
-/* ============================================
-   Scroll Fade Indicator
-   ============================================ */
-
-.scroll-fade {
-    mask-image: linear-gradient(
-        to bottom,
-        black 0%,
-        black calc(100% - 24px),
-        transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-        to bottom,
-        black 0%,
-        black calc(100% - 24px),
-        transparent 100%
-    );
 }
 
 /* ============================================

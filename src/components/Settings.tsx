@@ -80,6 +80,9 @@ function Toggle({ label, checked, onChange }: ToggleProps) {
     )
 }
 
+const SUPPORT_EMAIL = "granqvistsanna@gmail.com"
+const WIKIPEDIA_URL = "https://en.wikipedia.org/wiki/Pomodoro_Technique"
+
 export function Settings({ settings, onUpdate, onClose, timerStatus, timeRemaining, theme, onToggleTheme }: SettingsProps) {
     const isTimerActive = timerStatus === "running" || timerStatus === "paused"
     const [showSaved, setShowSaved] = useState(false)
@@ -152,7 +155,7 @@ export function Settings({ settings, onUpdate, onClose, timerStatus, timeRemaini
                     onChange={(v) => onUpdate({ longBreakDuration: v })}
                 />
                 <NumberInput
-                    label="Sessions"
+                    label="Long break after"
                     value={settings.longBreakInterval}
                     onChange={(v) => onUpdate({ longBreakInterval: v })}
                     min={2}
@@ -174,6 +177,34 @@ export function Settings({ settings, onUpdate, onClose, timerStatus, timeRemaini
                     checked={theme === "dark"}
                     onChange={onToggleTheme}
                 />
+            </div>
+
+            {/* Utility links */}
+            <div className="mt-auto pt-3 flex gap-2 border-t border-theme-border">
+                <a
+                    href={WIKIPEDIA_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex flex-col items-center gap-1.5 py-2.5 rounded-lg bg-theme-hover-bg hover:bg-theme-border transition-colors group active:scale-[0.98]"
+                >
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" className="text-theme-text-muted group-hover:text-theme-text-secondary transition-colors">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM7.25 5a.75.75 0 011.5 0v3a.75.75 0 01-1.5 0V5zm.75 5.5a.75.75 0 100 1.5.75.75 0 000-1.5z"/>
+                    </svg>
+                    <span className="text-[9px] font-medium text-theme-text-muted group-hover:text-theme-text-secondary transition-colors">
+                        Learn more
+                    </span>
+                </a>
+                <a
+                    href={`mailto:${SUPPORT_EMAIL}`}
+                    className="flex-1 flex flex-col items-center gap-1.5 py-2.5 rounded-lg bg-theme-hover-bg hover:bg-theme-border transition-colors group active:scale-[0.98]"
+                >
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" className="text-theme-text-muted group-hover:text-theme-text-secondary transition-colors">
+                        <path d="M2 4.5A1.5 1.5 0 013.5 3h9A1.5 1.5 0 0114 4.5v7a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 012 11.5v-7zm1.5-.25a.25.25 0 00-.164.44L8 8.3l4.664-3.61a.25.25 0 00-.164-.44h-9z"/>
+                    </svg>
+                    <span className="text-[9px] font-medium text-theme-text-muted group-hover:text-theme-text-secondary transition-colors">
+                        Feedback
+                    </span>
+                </a>
             </div>
         </div>
     )
