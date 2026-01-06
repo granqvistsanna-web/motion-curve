@@ -314,3 +314,29 @@ a:focus-visible {
     background-color: var(--color-hover-bg);
     border: none;
 }
+
+/* Footer links */
+.footer-link {
+    background-color: transparent;
+}
+
+.footer-link:hover {
+    background-color: var(--color-hover-bg);
+    transform: scale(1.02);
+}
+
+.footer-icon {
+    color: var(--color-text-muted);
+}
+
+.footer-link:hover .footer-icon {
+    color: var(--color-accent);
+}
+
+.footer-text {
+    color: var(--color-text-muted);
+}
+
+.footer-link:hover .footer-text {
+    color: var(--color-text);
+}

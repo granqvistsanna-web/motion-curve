@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import { framer } from "framer-plugin"
 import type { Theme } from "../types"
 
 function applyTheme(mode: Theme) {
@@ -7,26 +6,42 @@ function applyTheme(mode: Theme) {
 }
 
 /**
+ * Get current theme from prefers-color-scheme media query
+ * Framer syncs this with its theme setting for plugin iframes
+ */
+function getSystemTheme(): Theme {
+    return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+}
+
+/**
  * Hook for syncing theme with Framer's theme setting
+ * Uses prefers-color-scheme media query which Framer syncs with its UI theme
  */
 export function useTheme() {
-    const [theme, setTheme] = useState<Theme>("light")
+    const [theme, setTheme] = useState<Theme>(() => {
+        const initial = getSystemTheme()
+        applyTheme(initial)
+        return initial
+    })
 
-    // Subscribe to Framer's theme changes
     useEffect(() => {
-        // Apply initial theme from Framer
-        const initialMode = framer.mode === "dark" ? "dark" : "light"
-        setTheme(initialMode)
-        applyTheme(initialMode)
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
 
-        // Subscribe to theme changes
-        const unsubscribe = framer.subscribeToTheme((framerTheme) => {
-            const newTheme = framerTheme.mode === "dark" ? "dark" : "light"
+        const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
+            const newTheme = e.matches ? "dark" : "light"
             setTheme(newTheme)
             applyTheme(newTheme)
-        })
+        }
 
-        return unsubscribe
+        // Apply initial theme
+        handleChange(mediaQuery)
+
+        // Listen for changes
+        mediaQuery.addEventListener("change", handleChange)
+
+        return () => {
+            mediaQuery.removeEventListener("change", handleChange)
+        }
     }, [])
 
     return { theme }
