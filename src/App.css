@@ -11,7 +11,7 @@
     --color-accent: #e85d36;
     --color-accent-hover: #d45430;
     --color-accent-muted: rgba(232, 93, 54, 0.12);
-    --color-accent-glow: rgba(232, 93, 54, 0.3);
+    --color-accent-glow: rgba(232, 93, 54, 0.45);
 
     /* Semantic colors */
     --color-success: #34c759;
@@ -19,7 +19,7 @@
 
     /* Break color - calm blue */
     --color-break: #5b9bd5;
-    --color-break-glow: rgba(91, 155, 213, 0.3);
+    --color-break-glow: rgba(91, 155, 213, 0.45);
 
     /* Backgrounds */
     --color-bg: #fafafa;
@@ -68,7 +68,7 @@
     --color-accent: #ff7f5c;
     --color-accent-hover: #ff9474;
     --color-accent-muted: rgba(255, 127, 92, 0.15);
-    --color-accent-glow: rgba(255, 127, 92, 0.25);
+    --color-accent-glow: rgba(255, 127, 92, 0.4);
 
     /* Semantic colors */
     --color-success: #30d158;
@@ -76,7 +76,7 @@
 
     /* Break color - calm blue */
     --color-break: #6bb3e8;
-    --color-break-glow: rgba(107, 179, 232, 0.25);
+    --color-break-glow: rgba(107, 179, 232, 0.4);
 
     /* Backgrounds */
     --color-bg: #141414;
@@ -188,12 +188,10 @@ body {
 
 @keyframes glow-pulse {
     0%, 100% {
-        opacity: 1;
-        transform: scale(1);
+        transform: scale(0.95);
     }
     50% {
-        opacity: 0.6;
-        transform: scale(1.15);
+        transform: scale(1.08);
     }
 }
 
@@ -206,7 +204,7 @@ body {
 }
 
 .animate-glow-pulse {
-    animation: glow-pulse 4s ease-in-out infinite;
+    animation: glow-pulse 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 /* ============================================
@@ -234,8 +232,15 @@ body {
    Focus States
    ============================================ */
 
-button:focus-visible {
+button:focus-visible,
+a:focus-visible {
     outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+/* Ensure focus ring is visible on rounded elements */
+.rounded-lg:focus-visible,
+.rounded-full:focus-visible {
     outline-offset: 2px;
 }
 

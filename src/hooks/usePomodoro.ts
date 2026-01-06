@@ -134,8 +134,14 @@ export function usePomodoro(onComplete?: (mode: TimerMode) => void) {
         const tick = () => {
             const remaining = Math.max(0, Math.round((endTime - Date.now()) / 1000))
 
-            setState(prev => {
-                if (remaining <= 0) {
+            if (remaining <= 0) {
+                // Clear interval immediately to prevent re-triggering
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current)
+                    intervalRef.current = null
+                }
+
+                setState(prev => {
                     // Timer complete
                     const completedMode = prev.mode
 
@@ -173,8 +179,11 @@ export function usePomodoro(onComplete?: (mode: TimerMode) => void) {
                         completedSessions: newCompletedSessions,
                         todaySessions: newTodaySessions,
                     }
-                }
+                })
+                return
+            }
 
+            setState(prev => {
                 // Only update if time actually changed
                 if (prev.timeRemaining !== remaining) {
                     return { ...prev, timeRemaining: remaining }
@@ -194,8 +203,9 @@ export function usePomodoro(onComplete?: (mode: TimerMode) => void) {
                 clearInterval(intervalRef.current)
             }
         }
+        // state.mode is included so effect restarts with new duration on auto-start
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.status, settings])
+    }, [state.status, state.mode, settings])
 
     const start = useCallback(() => {
         // Initialize audio on first user interaction (required by browser autoplay policy)

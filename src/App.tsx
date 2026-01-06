@@ -79,8 +79,8 @@ export function App() {
                     title="Expand"
                     aria-label="Expand to full view"
                 >
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M8.5 2H12V5.5M5.5 12H2V8.5M12 2L8 6M2 12L6 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                        <path d="M9 2H12V5M5 12H2V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                 </button>
 
@@ -122,12 +122,12 @@ export function App() {
                     aria-label={isRunning ? "Pause timer" : isPaused ? "Resume timer" : "Start timer"}
                 >
                     {isRunning ? (
-                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                             <rect x="3" y="2" width="3" height="10" rx="1" fill="currentColor"/>
                             <rect x="8" y="2" width="3" height="10" rx="1" fill="currentColor"/>
                         </svg>
                     ) : (
-                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                             <path d="M3 2.5V11.5L11.5 7L3 2.5Z" fill="currentColor"/>
                         </svg>
                     )}
@@ -156,8 +156,8 @@ export function App() {
                     title="Minimize"
                     aria-label="Minimize to compact view"
                 >
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                        <path d="M5 2H2V5M9 12H12V9M2 2L6 6M12 12L8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                        <path d="M5 2H2V5M9 12H12V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                 </button>
 
@@ -177,7 +177,7 @@ export function App() {
                         title="Settings"
                         aria-label="Open settings"
                     >
-                        <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                        <svg width="10" height="10" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                             <circle cx="7" cy="7" r="1.5" fill="currentColor"/>
                             <circle cx="7" cy="3" r="1.5" fill="currentColor"/>
                             <circle cx="7" cy="11" r="1.5" fill="currentColor"/>

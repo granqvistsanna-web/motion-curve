@@ -91,18 +91,18 @@ export function TimerDisplay({ mode, status, timeRemaining, settings }: TimerDis
     }, [activeCount, isRunning, modeColor])
 
     return (
-        <div className="relative flex flex-col items-center">
-            {/* Timer graphic */}
-            <div className="relative" style={{ willChange: isRunning ? "transform" : "auto" }}>
+        <div className="relative flex flex-col items-center" role="timer" aria-label={`${getModeLabel(mode)} timer`}>
+            {/* Timer graphic - decorative */}
+            <div className="relative" style={{ willChange: isRunning ? "transform" : "auto" }} aria-hidden="true">
                 {/* Ambient glow when running - uses transform/opacity only (GPU) */}
                 <div
-                    className={`absolute -inset-4 rounded-full ${
+                    className={`absolute -inset-6 rounded-full pointer-events-none ${
                         isRunning ? "opacity-100 animate-glow-pulse" : "opacity-0"
                     }`}
                     style={{
-                        background: `radial-gradient(circle, ${modeGlow} 0%, transparent 60%)`,
-                        transition: "opacity 1s ease-out",
-                        willChange: isRunning ? "transform, opacity" : "auto"
+                        background: `radial-gradient(circle, ${modeGlow} 0%, transparent 65%)`,
+                        transition: "opacity 0.8s ease-out",
+                        willChange: isRunning ? "transform" : "auto"
                     }}
                 />
 
@@ -143,6 +143,8 @@ export function TimerDisplay({ mode, status, timeRemaining, settings }: TimerDis
 
                 {/* Main time - uses tabular figures to prevent layout shift */}
                 <span
+                    aria-live="off"
+                    aria-atomic="true"
                     className={`text-[20px] font-light tracking-[-0.02em] leading-none ${
                         isRunning ? "text-theme-text" : "text-theme-text-secondary"
                     }`}
