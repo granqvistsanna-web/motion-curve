@@ -66,7 +66,8 @@ export function Toast({ mode, visible, onDismiss, compact = false }: ToastProps)
             >
                 <div
                     onClick={handleDismiss}
-                    className="flex items-center gap-1.5 py-1.5 px-3 rounded-lg bg-surface-elevated backdrop-blur-md shadow-theme-lg border border-theme-border cursor-pointer pointer-events-auto"
+                    className="flex items-center gap-1.5 py-1.5 px-3 rounded-xl backdrop-blur-xl shadow-theme-lg cursor-pointer pointer-events-auto"
+                    style={{ backgroundColor: "var(--color-glass-bg)", borderWidth: 1, borderStyle: "solid", borderColor: "var(--color-glass-border)" }}
                 >
                     <CheckIcon />
                     <span className="text-[11px] font-medium text-theme-text">{content}</span>
@@ -86,7 +87,8 @@ export function Toast({ mode, visible, onDismiss, compact = false }: ToastProps)
         >
             <div
                 onClick={handleDismiss}
-                className="flex items-center gap-2 py-2 px-4 rounded-lg bg-surface-overlay backdrop-blur-md shadow-theme-lg border border-theme-border cursor-pointer pointer-events-auto"
+                className="flex items-center gap-2 py-2 px-4 rounded-xl backdrop-blur-xl shadow-theme-lg cursor-pointer pointer-events-auto"
+                style={{ backgroundColor: "var(--color-glass-bg)", borderWidth: 1, borderStyle: "solid", borderColor: "var(--color-glass-border)" }}
             >
                 <CheckIcon />
                 <span className="text-[11px] font-medium text-theme-text">{content}</span>

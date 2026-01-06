@@ -2,33 +2,31 @@ import { useState, useEffect } from "react"
 import { framer } from "framer-plugin"
 import type { Theme } from "../types"
 
+function applyTheme(mode: Theme) {
+    document.documentElement.setAttribute("data-theme", mode)
+}
+
 /**
  * Hook for syncing theme with Framer's theme setting
  */
 export function useTheme() {
     const [theme, setTheme] = useState<Theme>("light")
 
-    // Subscribe to Framer's theme
+    // Subscribe to Framer's theme changes
     useEffect(() => {
-        let unsubscribe: (() => void) | undefined
+        // Apply initial theme from Framer
+        const initialMode = framer.mode === "dark" ? "dark" : "light"
+        setTheme(initialMode)
+        applyTheme(initialMode)
 
-        try {
-            unsubscribe = framer.subscribe("theme", (framerTheme) => {
-                const newTheme = framerTheme === "dark" ? "dark" : "light"
-                setTheme(newTheme)
-                document.documentElement.setAttribute("data-theme", newTheme)
-            })
-        } catch {
-            // Fallback to system preference if Framer subscription fails
-            const isDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches
-            const fallbackTheme = isDark ? "dark" : "light"
-            setTheme(fallbackTheme)
-            document.documentElement.setAttribute("data-theme", fallbackTheme)
-        }
+        // Subscribe to theme changes
+        const unsubscribe = framer.subscribeToTheme((framerTheme) => {
+            const newTheme = framerTheme.mode === "dark" ? "dark" : "light"
+            setTheme(newTheme)
+            applyTheme(newTheme)
+        })
 
-        return () => {
-            if (unsubscribe) unsubscribe()
-        }
+        return unsubscribe
     }, [])
 
     return { theme }
