@@ -2,8 +2,8 @@ import type { Category } from "../types"
 import { CATEGORIES } from "../constants"
 
 interface CategoryFilterProps {
-    selected: Category | "all"
-    onSelect: (category: Category | "all") => void
+    selected: Category | "all" | "recent"
+    onSelect: (category: Category | "all" | "recent") => void
 }
 
 export function CategoryFilter({ selected, onSelect }: CategoryFilterProps) {

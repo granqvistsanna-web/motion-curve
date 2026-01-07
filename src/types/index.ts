@@ -15,6 +15,6 @@ export type CopyFormat = "cubic-bezier" | "css-transition" | "js-object"
 
 // Category filter type
 export interface CategoryFilter {
-    id: Category | "all"
+    id: Category | "all" | "recent"
     label: string
 }

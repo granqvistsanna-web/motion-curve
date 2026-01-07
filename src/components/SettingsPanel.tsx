@@ -74,7 +74,7 @@ export function SettingsPanel({
                                     {format.label}
                                 </span>
                                 {index < copyFormats.length - 1 && copyFormat !== format.id && copyFormat !== copyFormats[index + 1]?.id && (
-                                    <div className="w-px h-3.5 bg-theme-text-tertiary/20" />
+                                    <div className="w-px h-3.5 bg-theme-text-tertiary/10" />
                                 )}
                             </div>
                         ))}
@@ -89,7 +89,7 @@ export function SettingsPanel({
                 </div>
 
                 {/* Divider */}
-                <div className="border-t border-theme-bg-secondary/60" />
+                <div className="border-t border-theme-text-tertiary/10" />
 
                 {/* Data Management */}
                 <div className="space-y-2">
@@ -145,12 +145,32 @@ export function SettingsPanel({
                         </button>
                     </div>
                 </div>
+
+                {/* Divider */}
+                <div className="border-t border-theme-text-tertiary/10" />
+
+                {/* Support */}
+                <div className="space-y-2">
+                    <label className="text-[10px] font-medium text-theme-text-tertiary uppercase tracking-wider">
+                        Support
+                    </label>
+                    <button
+                        onClick={() => window.open("mailto:granqvistsanna@gmail.com", "_blank")}
+                        className="w-full flex items-center justify-start gap-2 px-2.5 py-2 rounded-lg bg-theme-bg-secondary/30 text-theme-text hover:bg-theme-bg-secondary transition-all cursor-pointer text-left"
+                    >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                        <span className="text-[11px] font-medium">Questions or bugs?</span>
+                    </button>
+                </div>
             </div>
 
             {/* Footer */}
-            <div className="flex-shrink-0 px-3 py-3 border-t border-theme-bg-secondary/40">
+            <div className="flex-shrink-0 px-3 py-3 border-t border-theme-text-tertiary/10">
                 <p className="text-[9px] text-theme-text-tertiary/50 text-center">
-                    Motion Curves v1.0
+                    Easings Supply by Sanna Granqvist
                 </p>
             </div>
         </div>

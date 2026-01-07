@@ -68,42 +68,33 @@ export function CurvePreview({ value, mode, duration = 400, isHovered = false }:
 
     const cubicBezierCSS = `cubic-bezier(${value.join(", ")})`
 
+    // Fade mode: Modal entrance animation
     if (mode === "square") {
         return (
-            <div className="relative w-9 h-7">
-                {/* Ghost outline when not hovered */}
+            <div
+                className="w-9 h-7 rounded-[4px] overflow-hidden flex flex-col"
+                style={{
+                    backgroundColor: "var(--framer-color-bg-tertiary, #f5f5f5)",
+                    boxShadow: isHovered ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+                    opacity: isHovered ? 1 : 0,
+                    transform: isHovered ? "translateY(0) scale(1)" : "translateY(6px) scale(0.9)",
+                    transition: `opacity ${duration}ms ${cubicBezierCSS}, transform ${duration}ms ${cubicBezierCSS}, box-shadow ${duration}ms ${cubicBezierCSS}`,
+                }}
+            >
+                {/* Modal header bar */}
                 <div
-                    className="absolute inset-0 rounded-[4px] border border-dashed border-current opacity-20"
-                    style={{
-                        opacity: isHovered ? 0 : 0.2,
-                        transition: `opacity ${duration}ms ${cubicBezierCSS}`,
-                    }}
-                />
-                {/* Modal */}
-                <div
-                    className="absolute inset-0 rounded-[4px] overflow-hidden flex flex-col"
-                    style={{
-                        backgroundColor: "var(--framer-color-bg-tertiary, #f5f5f5)",
-                        boxShadow: isHovered ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
-                        opacity: isHovered ? 1 : 0,
-                        transform: isHovered ? "translateY(0) scale(1)" : "translateY(4px) scale(0.92)",
-                        transition: `opacity ${duration}ms ${cubicBezierCSS}, transform ${duration}ms ${cubicBezierCSS}, box-shadow ${duration}ms ${cubicBezierCSS}`,
-                    }}
+                    className="h-1.5 w-full flex items-center justify-end gap-[2px] px-1"
+                    style={{ backgroundColor: "var(--framer-color-tint)" }}
                 >
-                    {/* Modal header bar */}
-                    <div
-                        className="h-1.5 w-full flex items-center justify-end gap-[2px] px-1"
-                        style={{ backgroundColor: "var(--framer-color-tint)" }}
-                    >
-                        <div className="w-1 h-1 rounded-full bg-white/60" />
-                    </div>
-                    {/* Modal body */}
-                    <div className="flex-1" />
+                    <div className="w-1 h-1 rounded-full bg-white/60" />
                 </div>
+                {/* Modal body */}
+                <div className="flex-1" />
             </div>
         )
     }
 
+    // Hover mode: Button hover effect
     if (mode === "arrow") {
         return (
             <div
@@ -147,15 +138,15 @@ export function CurvePreview({ value, mode, duration = 400, isHovered = false }:
         )
     }
 
+    // Enter mode: Text entrance animation
     if (mode === "blur") {
-        // Text entrance animation
         return (
             <span
                 className="text-[15px] font-semibold select-none"
                 style={{
                     color: "var(--framer-color-tint)",
                     opacity: isHovered ? 1 : 0,
-                    transform: isHovered ? "translateY(0)" : "translateY(8px)",
+                    transform: isHovered ? "translateY(0)" : "translateY(10px)",
                     transition: `opacity ${duration}ms ${cubicBezierCSS}, transform ${duration}ms ${cubicBezierCSS}`,
                 }}
             >
@@ -164,6 +155,7 @@ export function CurvePreview({ value, mode, duration = 400, isHovered = false }:
         )
     }
 
+    // Curve mode: Animated bezier curve visualization (default)
     return (
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
             <path
@@ -180,12 +172,13 @@ export function CurvePreview({ value, mode, duration = 400, isHovered = false }:
                 cy={dotPos.y}
                 r={isHovered ? 3.5 : 0}
                 fill="var(--framer-color-tint)"
-                style={{ transition: `r 0.15s ease-out` }}
+                style={{ transition: "r 0.15s ease-out" }}
             />
         </svg>
     )
 }
 
+// Attempt to find the Y value for a given X using Newton-Raphson iteration
 function cubicBezierEase(t: number, x1: number, y1: number, x2: number, y2: number): number {
     let guessT = t
     for (let i = 0; i < 8; i++) {
@@ -197,11 +190,13 @@ function cubicBezierEase(t: number, x1: number, y1: number, x2: number, y2: numb
     return cubicBezierCalc(guessT, y1, y2)
 }
 
+// Calculate cubic bezier value at time t
 function cubicBezierCalc(t: number, p1: number, p2: number): number {
     const mt = 1 - t
     return 3 * mt * mt * t * p1 + 3 * mt * t * t * p2 + t * t * t
 }
 
+// Calculate derivative of cubic bezier at time t
 function cubicBezierDerivative(t: number, p1: number, p2: number): number {
     const mt = 1 - t
     return 3 * mt * mt * p1 + 6 * mt * t * (p2 - p1) + 3 * t * t * (1 - p2)

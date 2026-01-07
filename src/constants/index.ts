@@ -10,6 +10,7 @@ export const PLUGIN_CONFIG = {
 // Categories for filtering curves
 export const CATEGORIES: CategoryFilter[] = [
     { id: "all", label: "All" },
+    { id: "recent", label: "Recent" },
     { id: "smooth", label: "Smooth" },
     { id: "snappy", label: "Snappy" },
     { id: "spring", label: "Spring" },
@@ -29,6 +30,7 @@ export const STORAGE_KEYS = {
     favorites: "curve-favorites",
     customCurves: "custom-curves",
     copyFormat: "copy-format",
+    recentCurves: "recent-curves",
 } as const
 
 // Default values

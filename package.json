@@ -1,8 +1,8 @@
 {
-  "name": "framer-plugin-starter",
+  "name": "easings-supply",
   "private": false,
   "version": "1.0.0",
-  "description": "A Framer plugin starter kit",
+  "description": "A curated library of easing curves for Framer",
   "author": "",
   "keywords": [
     "framer",

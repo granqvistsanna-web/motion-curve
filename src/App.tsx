@@ -25,7 +25,7 @@ export function App() {
     const toast = useToast()
     const [view, setView] = useState<View>("curves")
     const [mode, setMode] = useState<VisualizationMode>("line")
-    const [category, setCategory] = useState<Category | "all">("all")
+    const [category, setCategory] = useState<Category | "all" | "recent">("all")
     const [duration, setDuration] = useState(DEFAULTS.duration)
 
     const [favorites, setFavorites, clearFavorites] = useLocalStorage<string[]>(
@@ -40,11 +40,22 @@ export function App() {
         STORAGE_KEYS.copyFormat,
         DEFAULTS.copyFormat
     )
+    const [recentCurves, setRecentCurves] = useLocalStorage<string[]>(
+        STORAGE_KEYS.recentCurves,
+        []
+    )
 
     const toggleFavorite = (id: string) => {
         setFavorites(prev =>
             prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]
         )
+    }
+
+    const addToRecent = (id: string) => {
+        setRecentCurves(prev => {
+            const filtered = prev.filter(i => i !== id)
+            return [id, ...filtered].slice(0, 10) // Keep last 10
+        })
     }
 
     const handleAddCurve = (curve: EasingCurve) => {
@@ -55,12 +66,16 @@ export function App() {
 
     const filteredCurves = view === "favorites"
         ? allCurves.filter(curve => favorites.includes(curve.id))
-        : allCurves.filter(curve => category === "all" || curve.category === category)
+        : category === "recent"
+            ? allCurves.filter(curve => recentCurves.includes(curve.id))
+                .sort((a, b) => recentCurves.indexOf(a.id) - recentCurves.indexOf(b.id))
+            : allCurves.filter(curve => category === "all" || curve.category === category)
 
     const handleCopy = async (curve: EasingCurve) => {
         const value = formatCurveValue(curve.value, copyFormat, duration)
         const success = await copyToClipboard(value)
         if (success) {
+            addToRecent(curve.id)
             toast.show()
         }
     }
@@ -92,6 +107,8 @@ export function App() {
                                 favorites={favorites}
                                 onCopy={handleCopy}
                                 onToggleFavorite={toggleFavorite}
+                                emptyMessage={category === "recent" ? "No recent curves" : "No curves found"}
+                                emptySubtext={category === "recent" ? "Curves you copy will appear here" : undefined}
                             />
                         </div>
                     </>

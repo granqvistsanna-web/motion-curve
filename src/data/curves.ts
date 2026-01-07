@@ -32,6 +32,15 @@ export const curves: EasingCurve[] = [
     { id: "linear-app", name: "Linear", category: "smooth", value: [0.35, 0, 0.25, 1] },
     { id: "figma-gentle", name: "Figma Gentle", category: "smooth", value: [0.41, 0.1, 0.42, 0.95] },
     { id: "spotify", name: "Spotify", category: "smooth", value: [0.3, 0, 0, 1] },
+    { id: "vercel", name: "Vercel", category: "smooth", value: [0.36, 0.66, 0.04, 1] },
+    { id: "notion", name: "Notion", category: "smooth", value: [0.2, 0.8, 0.2, 1] },
+    { id: "airbnb", name: "Airbnb", category: "smooth", value: [0.4, 0, 0, 1] },
+    { id: "framer", name: "Framer", category: "smooth", value: [0.44, 0, 0.56, 1] },
+
+    // Functional
+    { id: "settle", name: "Settle", category: "smooth", value: [0, 0.7, 0.1, 1] },
+    { id: "gentle-out", name: "Gentle Out", category: "smooth", value: [0.5, 0.9, 0.7, 1] },
+    { id: "float", name: "Float", category: "smooth", value: [0.1, 0.9, 0.2, 1] },
 
     // === SNAPPY === Quick, responsive motion
 
@@ -56,6 +65,7 @@ export const curves: EasingCurve[] = [
     { id: "punch", name: "Punch", category: "snappy", value: [0.19, 1, 0.22, 1] },
     { id: "figma-quick", name: "Figma Quick", category: "snappy", value: [0.68, 0, 0.27, 1] },
     { id: "slack", name: "Slack", category: "snappy", value: [0.36, 0.07, 0.19, 0.97] },
+    { id: "arc", name: "Arc", category: "snappy", value: [0.22, 0.68, 0, 1] },
 
     // === SPRING === Overshoot and bounce
 
@@ -67,6 +77,7 @@ export const curves: EasingCurve[] = [
     { id: "pop", name: "Pop", category: "spring", value: [0.26, 1.7, 0.35, 0.9] },
     { id: "jelly", name: "Jelly", category: "spring", value: [0.3, 1.5, 0.5, 1.15] },
     { id: "discord-pop", name: "Discord Pop", category: "spring", value: [0.34, 1.56, 0.64, 1] },
+    { id: "elastic-soft", name: "Elastic Soft", category: "spring", value: [0.68, -0.6, 0.32, 1.6] },
 
     // === EXPRESSIVE === Playful, dramatic motion
 
@@ -81,4 +92,6 @@ export const curves: EasingCurve[] = [
     { id: "wind-up", name: "Wind Up", category: "expressive", value: [0.68, -0.55, 0.27, 1.55] },
     { id: "rubber", name: "Rubber", category: "expressive", value: [0.175, 0.885, 0.32, 1.1] },
     { id: "swoosh", name: "Swoosh", category: "expressive", value: [0.55, 0.085, 0.68, 0.53] },
+    { id: "dramatic", name: "Dramatic", category: "expressive", value: [0.9, 0, 0.1, 1] },
+    { id: "whip", name: "Whip", category: "expressive", value: [0.85, 0, 0.05, 1] },
 ]

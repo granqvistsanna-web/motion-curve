@@ -7,8 +7,8 @@ interface AddCurveFormProps {
     onSave: (curve: EasingCurve) => void
 }
 
-// Filter out "all" for the form
-const categories = CATEGORIES.filter(c => c.id !== "all") as { id: Category; label: string }[]
+// Filter out "all" and "recent" for the form (only actual categories)
+const categories = CATEGORIES.filter(c => c.id !== "all" && c.id !== "recent") as { id: Category; label: string }[]
 
 export function AddCurveForm({ onSave }: AddCurveFormProps) {
     const [name, setName] = useState("")
@@ -23,11 +23,11 @@ export function AddCurveForm({ onSave }: AddCurveFormProps) {
     const curveValue: [number, number, number, number] = [x1, y1, x2, y2]
 
     const handleSave = () => {
-        if (!name.trim()) return
+        const curveName = name.trim() || `Custom ${category.charAt(0).toUpperCase() + category.slice(1)}`
 
         const curve: EasingCurve = {
             id: `custom-${Date.now()}`,
-            name: name.trim(),
+            name: curveName,
             category,
             value: curveValue,
         }
@@ -148,13 +148,10 @@ export function AddCurveForm({ onSave }: AddCurveFormProps) {
             <div className="flex-shrink-0 px-3 pb-3">
                 <button
                     onClick={handleSave}
-                    disabled={!name.trim()}
                     className={`w-full py-2 text-[11px] font-semibold rounded-lg transition-all ${
                         saved
                             ? "bg-green-500 text-white"
-                            : name.trim()
-                                ? "bg-[var(--framer-color-tint,#0099FF)] text-white hover:opacity-90 active:scale-[0.98]"
-                                : "bg-theme-bg-secondary/60 text-theme-text-tertiary cursor-not-allowed"
+                            : "bg-[var(--framer-color-tint,#0099FF)] text-white hover:opacity-90 active:scale-[0.98]"
                     }`}
                 >
                     {saved ? "Saved!" : "Save Curve"}
