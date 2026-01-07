@@ -1,4 +1,5 @@
-export type Category = "standard" | "smooth" | "snappy" | "expressive" | "spring"
+// Curve types
+export type Category = "smooth" | "snappy" | "spring" | "expressive"
 
 export interface EasingCurve {
     id: string
@@ -7,11 +8,13 @@ export interface EasingCurve {
     value: [number, number, number, number]
 }
 
-export const CATEGORIES: { id: Category | "all"; label: string }[] = [
-    { id: "all", label: "All" },
-    { id: "standard", label: "Standard" },
-    { id: "smooth", label: "Smooth" },
-    { id: "snappy", label: "Snappy" },
-    { id: "expressive", label: "Expressive" },
-    { id: "spring", label: "Spring" },
-]
+// UI types
+export type VisualizationMode = "line" | "square" | "arrow" | "blur"
+export type View = "curves" | "favorites" | "add" | "settings"
+export type CopyFormat = "cubic-bezier" | "css-transition" | "js-object"
+
+// Category filter type
+export interface CategoryFilter {
+    id: Category | "all"
+    label: string
+}

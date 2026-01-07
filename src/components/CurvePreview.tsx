@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import type { VisualizationMode } from "../App"
+import type { VisualizationMode } from "../types"
 
 interface CurvePreviewProps {
     value: [number, number, number, number]
@@ -70,42 +70,97 @@ export function CurvePreview({ value, mode, duration = 400, isHovered = false }:
 
     if (mode === "square") {
         return (
-            <div
-                className="w-7 h-7 rounded"
-                style={{
-                    backgroundColor: "var(--framer-color-tint)",
-                    opacity: isHovered ? 1 : 0.4,
-                    transform: isHovered ? "translateY(0) scale(1)" : "translateY(6px) scale(0.9)",
-                    transition: `opacity ${duration}ms ${cubicBezierCSS}, transform ${duration}ms ${cubicBezierCSS}`,
-                }}
-            />
+            <div className="relative w-9 h-7">
+                {/* Ghost outline when not hovered */}
+                <div
+                    className="absolute inset-0 rounded-[4px] border border-dashed border-current opacity-20"
+                    style={{
+                        opacity: isHovered ? 0 : 0.2,
+                        transition: `opacity ${duration}ms ${cubicBezierCSS}`,
+                    }}
+                />
+                {/* Modal */}
+                <div
+                    className="absolute inset-0 rounded-[4px] overflow-hidden flex flex-col"
+                    style={{
+                        backgroundColor: "var(--framer-color-bg-tertiary, #f5f5f5)",
+                        boxShadow: isHovered ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+                        opacity: isHovered ? 1 : 0,
+                        transform: isHovered ? "translateY(0) scale(1)" : "translateY(4px) scale(0.92)",
+                        transition: `opacity ${duration}ms ${cubicBezierCSS}, transform ${duration}ms ${cubicBezierCSS}, box-shadow ${duration}ms ${cubicBezierCSS}`,
+                    }}
+                >
+                    {/* Modal header bar */}
+                    <div
+                        className="h-1.5 w-full flex items-center justify-end gap-[2px] px-1"
+                        style={{ backgroundColor: "var(--framer-color-tint)" }}
+                    >
+                        <div className="w-1 h-1 rounded-full bg-white/60" />
+                    </div>
+                    {/* Modal body */}
+                    <div className="flex-1" />
+                </div>
+            </div>
         )
     }
 
     if (mode === "arrow") {
         return (
-            <div className="flex items-center gap-1">
+            <div
+                className="flex items-center justify-center gap-1 px-2 py-1 rounded-md"
+                style={{
+                    backgroundColor: isHovered ? "var(--framer-color-tint)" : "transparent",
+                    border: isHovered ? "1px solid transparent" : "1px solid currentColor",
+                    opacity: isHovered ? 1 : 0.3,
+                    transition: `background-color ${duration}ms ${cubicBezierCSS}, border ${duration}ms ${cubicBezierCSS}, opacity ${duration}ms ${cubicBezierCSS}`,
+                }}
+            >
+                <span
+                    className="text-[9px] font-medium"
+                    style={{
+                        color: isHovered ? "white" : "currentColor",
+                        transition: `color ${duration}ms ${cubicBezierCSS}`,
+                    }}
+                >
+                    Next
+                </span>
                 <svg
-                    width="20"
-                    height="20"
+                    width="10"
+                    height="10"
                     viewBox="0 0 20 20"
                     fill="none"
                     style={{
-                        transform: isHovered ? "translateX(6px)" : "translateX(0)",
-                        opacity: isHovered ? 1 : 0.3,
-                        transition: `transform ${duration}ms ${cubicBezierCSS}, opacity ${duration}ms ${cubicBezierCSS}`,
+                        transform: isHovered ? "translateX(2px)" : "translateX(0)",
+                        transition: `transform ${duration}ms ${cubicBezierCSS}`,
                     }}
                 >
                     <path
                         d="M4 10H16M16 10L11 5M16 10L11 15"
-                        stroke={isHovered ? "var(--framer-color-tint)" : "var(--framer-color-text)"}
-                        strokeWidth="2"
+                        stroke={isHovered ? "white" : "currentColor"}
+                        strokeWidth="2.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        style={{ transition: "stroke 0.2s" }}
+                        style={{ transition: `stroke ${duration}ms ${cubicBezierCSS}` }}
                     />
                 </svg>
             </div>
+        )
+    }
+
+    if (mode === "blur") {
+        // Text entrance animation
+        return (
+            <span
+                className="text-[15px] font-semibold select-none"
+                style={{
+                    color: "var(--framer-color-tint)",
+                    opacity: isHovered ? 1 : 0,
+                    transform: isHovered ? "translateY(0)" : "translateY(8px)",
+                    transition: `opacity ${duration}ms ${cubicBezierCSS}, transform ${duration}ms ${cubicBezierCSS}`,
+                }}
+            >
+                Hello
+            </span>
         )
     }
 

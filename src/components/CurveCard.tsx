@@ -1,6 +1,5 @@
 import { useState } from "react"
-import type { EasingCurve } from "../types"
-import type { VisualizationMode } from "../App"
+import type { EasingCurve, VisualizationMode } from "../types"
 import { CurvePreview } from "./CurvePreview"
 
 interface CurveCardProps {
@@ -23,20 +22,26 @@ export function CurveCard({ curve, mode, duration, isFavorite, onCopy, onToggleF
         >
             <button
                 onClick={() => onCopy(curve)}
-                className="
-                    w-full flex flex-col p-2.5 rounded-xl h-[96px]
-                    bg-theme-bg-secondary/50
+                className={`
+                    w-full flex flex-col p-2.5 rounded-xl h-[92px]
+                    bg-theme-bg-secondary/40
+                    border border-transparent
                     transition-all duration-150 ease-out
-                    hover:bg-theme-bg-secondary
+                    hover:bg-theme-bg-secondary hover:border-theme-bg-secondary
                     active:scale-[0.98]
-                "
+                `}
+                style={{
+                    boxShadow: isHovered ? 'inset 0 0 0 1px var(--framer-color-divider)' : 'none'
+                }}
             >
                 <div className="flex-1 flex items-center justify-center w-full">
                     <CurvePreview value={curve.value} mode={mode} duration={duration} isHovered={isHovered} />
                 </div>
 
                 <div className="w-full mt-auto text-center">
-                    <div className="text-[10px] font-medium text-theme-text leading-none truncate">
+                    <div className={`text-[10px] font-medium leading-none truncate transition-colors ${
+                        isHovered ? "text-theme-text" : "text-theme-text-secondary"
+                    }`}>
                         {curve.name}
                     </div>
                 </div>
@@ -49,11 +54,11 @@ export function CurveCard({ curve, mode, duration, isFavorite, onCopy, onToggleF
                     onToggleFavorite(curve.id)
                 }}
                 className={`
-                    absolute top-2 right-2 w-4 h-4 flex items-center justify-center
+                    absolute top-2 right-2 w-5 h-5 flex items-center justify-center rounded-md
                     transition-all duration-150
                     ${isFavorite
                         ? "opacity-100 text-theme-text"
-                        : "opacity-0 group-hover:opacity-60 text-theme-text-tertiary hover:opacity-100"
+                        : "opacity-0 group-hover:opacity-50 text-theme-text-tertiary hover:!opacity-100"
                     }
                 `}
             >
