@@ -25,6 +25,11 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+html, body, #root {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     background-color: var(--framer-color-bg);
     color: var(--framer-color-text);
@@ -230,4 +235,17 @@ body {
 
 .animate-fade-in {
     animation: fade-in 0.2s ease-out;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
 }

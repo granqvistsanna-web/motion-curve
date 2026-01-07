@@ -1,6 +1,6 @@
 {
-  "id": "plugin-id",
-  "name": "My Plugin",
+  "id": "motcrv",
+  "name": "Motion Curves",
   "modes": [
     "canvas"
   ],
